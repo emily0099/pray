@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>禱告文集</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&family=Cinzel+Decorative:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #fdf6ec;
+  --warm-white: #fffdf8;
+  --gold: #b8933a;
+  --gold-light: #d4ab55;
+  --gold-pale: #f5e9c5;
+  --brown: #5c3d2e;
+  --brown-light: #8a6240;
+  --text-dark: #2c1d12;
+  --text-mid: #5c4433;
+  --text-soft: #8a7260;
+  --olive: #6b7c4f;
+  --lavender: #7a6a9a;
+  --shadow: rgba(92,61,46,0.12);
+  --nav-h: 68px;
+  --nav-safe: env(safe-area-inset-bottom, 0px);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--cream);
+  font-family: 'Noto Sans TC', sans-serif;
+  color: var(--text-dark);
+  min-height: 100vh;
+  padding-bottom: calc(var(--nav-h) + var(--nav-safe));
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(184,147,58,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 90%, rgba(122,106,154,0.05) 0%, transparent 50%);
+}
+/* TOP BAR */
+.top-bar {
+  position: sticky; top:0; z-index:50;
+  background: rgba(253,246,236,0.93);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(184,147,58,0.18);
+  display: flex; align-items:center; justify-content:center;
+  padding: 14px 20px; gap:8px;
+}
+.top-bar .cross { color:var(--gold); font-size:1rem; }
+.top-bar .title {
+  font-family:'Noto Serif TC',serif;
+  font-size:1.05rem; font-weight:400;
+  letter-spacing:0.2em; color:var(--brown);
+}
+/* PAGES */
+.page { display:none; padding:0 0 24px; animation:fadeUp 0.35s ease both; }
+.page.active { display:block; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+/* HOME */
+.home-hero {
+  text-align:center; padding:48px 24px 32px;
+}
+.home-cross { font-size:2.4rem; color:var(--gold); margin-bottom:16px; display:block; }
+.home-title {
+  font-family:'Noto Serif TC',serif;
+  font-size:2rem; font-weight:300;
+  letter-spacing:0.2em; color:var(--brown); line-height:1.4;
+}
+.home-en {
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.62rem; letter-spacing:0.45em;
+  color:var(--gold); text-transform:uppercase;
+  margin:10px 0 26px; display:block;
+}
+.home-divider {
+  display:flex; align-items:center; gap:12px;
+  justify-content:center; margin:0 auto 26px; width:160px;
+}
+.home-divider::before,.home-divider::after {
+  content:''; flex:1; height:1px;
+}
+.home-divider::before { background:linear-gradient(90deg,transparent,var(--gold-light)); }
+.home-divider::after  { background:linear-gradient(90deg,var(--gold-light),transparent); }
+.home-divider span { color:var(--gold); font-size:0.8rem; }
+.home-verse {
+  font-family:'Noto Serif TC',serif;
+  font-size:0.92rem; font-weight:300;
+  color:var(--text-soft); font-style:italic;
+  line-height:2; max-width:300px; margin:0 auto;
+}
+.home-cards { padding:8px 16px; display:flex; flex-direction:column; gap:14px; }
+.home-card {
+  background:var(--warm-white);
+  border:1px solid rgba(184,147,58,0.22);
+  border-radius:18px; padding:20px 22px;
+  display:flex; align-items:center; gap:16px;
+  cursor:pointer; transition:all 0.22s ease;
+  box-shadow:0 2px 14px var(--shadow);
+  position:relative; overflow:hidden;
+}
+.home-card::after {
+  content:'›'; position:absolute; right:20px;
+  font-size:1.5rem; color:var(--gold-light);
+}
+.home-card:active { transform:scale(0.975); box-shadow:0 1px 6px var(--shadow); }
+.card-icon {
+  width:48px; height:48px;
+  background:linear-gradient(135deg,var(--gold-pale),rgba(212,171,85,0.28));
+  border-radius:14px; display:flex; align-items:center;
+  justify-content:center; font-size:1.4rem; flex-shrink:0;
+}
+.card-info { flex:1; min-width:0; }
+.card-title {
+  font-family:'Noto Serif TC',serif;
+  font-size:1rem; font-weight:500;
+  color:var(--brown); letter-spacing:0.05em; margin-bottom:4px;
+}
+.card-desc {
+  font-size:0.75rem; color:var(--text-soft);
+  letter-spacing:0.02em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+/* PRAYER HEADER */
+.prayer-header {
+  text-align:center; padding:32px 20px 24px;
+}
+.prayer-header .icon { font-size:1.8rem; margin-bottom:10px; display:block; }
+.prayer-header h1 {
+  font-family:'Noto Serif TC',serif;
+  font-size:1.45rem; font-weight:400;
+  color:var(--brown); letter-spacing:0.15em; line-height:1.4;
+}
+.prayer-header .en {
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.58rem; letter-spacing:0.35em;
+  color:var(--gold); text-transform:uppercase;
+  display:block; margin-top:6px;
+}
+.header-line {
+  width:48px; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin:16px auto 0; border-radius:2px;
+}
+/* PRAYER BODY */
+.prayer-body { padding:0 14px; }
+.prayer-card {
+  background:var(--warm-white);
+  border-radius:18px; padding:26px 20px;
+  box-shadow:0 3px 22px var(--shadow);
+  border:1px solid rgba(184,147,58,0.14);
+  margin-bottom:16px;
+}
+/* Chapter */
+.ch-block { margin:30px 0 18px; }
+.ch-label {
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.55rem; letter-spacing:0.4em;
+  color:var(--gold); text-transform:uppercase; margin-bottom:4px;
+}
+.ch-title {
+  font-family:'Noto Serif TC',serif;
+  font-size:1.08rem; font-weight:500;
+  color:var(--brown); letter-spacing:0.08em;
+  padding-left:14px; border-left:3px solid var(--gold); line-height:1.5;
+}
+.ch-verse {
+  font-size:0.8rem; color:var(--text-soft);
+  font-style:italic; margin-top:6px; padding-left:18px;
+}
+/* Sub */
+.sub-title {
+  font-family:'Noto Serif TC',serif;
+  font-size:0.97rem; font-weight:500;
+  color:var(--brown-light); letter-spacing:0.06em;
+  display:flex; align-items:center; gap:8px;
+  margin:18px 0 9px;
+}
+.sub-title::before { content:''; width:18px; height:1px; background:var(--gold-light); flex-shrink:0; }
+/* Text */
+.prayer-text {
+  font-family:'Noto Serif TC',serif;
+  font-size:0.96rem; font-weight:300;
+  line-height:2.2; color:var(--text-dark);
+}
+/* Bullet */
+.prayer-point { display:flex; gap:10px; margin:11px 0; }
+.prayer-point .bullet { color:var(--gold); font-size:0.7rem; margin-top:7px; flex-shrink:0; }
+.prayer-point p {
+  font-family:'Noto Serif TC',serif;
+  font-size:0.94rem; line-height:2.1;
+  color:var(--text-dark); font-weight:300;
+}
+/* Scripture */
+.scripture {
+  margin:14px 0; padding:13px 16px;
+  background:rgba(107,124,79,0.07);
+  border-left:3px solid var(--olive);
+  border-radius:0 10px 10px 0;
+  font-style:italic; font-size:0.87rem;
+  color:var(--text-mid); line-height:1.9;
+}
+/* Dialogue */
+.prayer-dialogue {
+  margin:12px 0; padding:15px 18px 15px 26px;
+  background:rgba(122,106,154,0.05);
+  border:1px solid rgba(122,106,154,0.13);
+  border-radius:12px; font-size:0.94rem;
+  color:var(--text-dark); line-height:2.1;
+  font-family:'Noto Serif TC',serif; font-weight:300;
+  position:relative;
+}
+.prayer-dialogue::before {
+  content:'"'; font-family:Georgia,serif;
+  font-size:2.2rem; color:rgba(122,106,154,0.18);
+  position:absolute; top:2px; left:7px; line-height:1;
+}
+/* Intro */
+.prayer-intro {
+  font-family:'Noto Serif TC',serif;
+  font-size:0.91rem; font-weight:300;
+  color:var(--brown-light); line-height:2.2;
+  margin-bottom:26px; font-style:italic; text-align:center;
+  padding:16px; background:rgba(212,171,85,0.07);
+  border-radius:12px; border:1px solid rgba(212,171,85,0.18);
+}
+/* Amen */
+.amen-block {
+  text-align:center; margin-top:32px;
+  padding-top:22px; border-top:1px solid rgba(184,147,58,0.2);
+}
+.amen-text {
+  font-family:'Noto Serif TC',serif;
+  font-size:0.93rem; color:var(--brown); line-height:2;
+}
+.amen-word {
+  font-size:1.3rem; letter-spacing:0.3em;
+  color:var(--gold); font-family:'Noto Serif TC',serif;
+  display:block; margin-top:6px;
+}
+.amen-cross { font-size:1.4rem; color:var(--gold); display:block; margin:10px auto 0; }
+/* BOTTOM NAV */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  background:rgba(253,246,236,0.96);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(184,147,58,0.22);
+  height:calc(var(--nav-h) + var(--nav-safe));
+  padding-bottom:var(--nav-safe);
+  display:flex; align-items:stretch;
+  box-shadow:0 -4px 20px rgba(92,61,46,0.08);
+}
+.nav-item {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:4px;
+  cursor:pointer; border:none; background:none; padding:0;
+  transition:all 0.2s ease; position:relative;
+}
+.nav-item::before {
+  content:''; position:absolute;
+  top:0; left:20%; right:20%; height:2px;
+  background:var(--gold); border-radius:0 0 2px 2px;
+  transform:scaleX(0); transition:transform 0.25s ease;
+}
+.nav-item.active::before { transform:scaleX(1); }
+.nav-icon { font-size:1.3rem; transition:transform 0.2s ease; }
+.nav-item.active .nav-icon { transform:scale(1.15); }
+.nav-label {
+  font-size:0.65rem; letter-spacing:0.04em;
+  color:var(--text-soft); font-family:'Noto Sans TC',sans-serif;
+  transition:color 0.2s; white-space:nowrap;
+}
+.nav-item.active .nav-label { color:var(--gold); font-weight:500; }
+/* SCROLL TOP */
+.scroll-top {
+  position:fixed;
+  bottom:calc(var(--nav-h) + var(--nav-safe) + 14px);
+  right:16px; width:40px; height:40px;
+  background:var(--warm-white);
+  border:1px solid rgba(184,147,58,0.3);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:1rem; color:var(--gold);
+  box-shadow:0 3px 14px var(--shadow);
+  opacity:0; transition:all 0.3s ease;
+  z-index:90; text-decoration:none;
+}
+.scroll-top.show { opacity:1; }
+.scroll-top:active { transform:scale(0.9); }
+@media (min-width:600px) {
+  .prayer-body { padding:0 20px; }
+  .prayer-card { padding:34px 30px; }
+  .home-cards { padding:8px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span class="cross">✝</span>
+  <span class="title">禱 告 文 集</span>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="home-hero">
+    <span class="home-cross">✝</span>
+    <h1 class="home-title">禱 告 文 集</h1>
+    <span class="home-en">Prayer Collection</span>
+    <div class="home-divider"><span>✦</span></div>
+    <p class="home-verse">
+      「你們禱告，無論求什麼，<br>只要信，就必得著。」<br>
+      <small style="font-size:0.8em;letter-spacing:0.1em;">— 馬太福音 21:22</small>
+    </p>
+  </div>
+  <div class="home-cards">
+    <div class="home-card" onclick="goTo('pray1')">
+      <div class="card-icon">👑</div>
+      <div class="card-info">
+        <div class="card-title">主掌權禱告</div>
+        <div class="card-desc">將生命每個層面交在主手中</div>
+      </div>
+    </div>
+    <div class="home-card" onclick="goTo('pray2')">
+      <div class="card-icon">🙏</div>
+      <div class="card-info">
+        <div class="card-title">以主禱文為架構禱告文</div>
+        <div class="card-desc">壹呼求 · 貳三願 · 参三求 · 肆讚美</div>
+      </div>
+    </div>
+    <div class="home-card" onclick="goTo('pray3')">
+      <div class="card-icon">💼</div>
+      <div class="card-info">
+        <div class="card-title">榮耀職場禱告文</div>
+        <div class="card-desc">宣教使命 · 卓越信念 · 品格操守</div>
+      </div>
+    </div>
+    <div class="home-card" onclick="goTo('pray4')">
+      <div class="card-icon">✨</div>
+      <div class="card-info">
+        <div class="card-title">雅比斯禱告</div>
+        <div class="card-desc">賜福 · 擴張境界 · 同在 · 保佑平安</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRAY 1 -->
+<div class="page" id="page-pray1">
+  <div class="prayer-header">
+    <span class="icon">👑</span>
+    <h1>主掌權禱告</h1>
+    <span class="en">Lord's Sovereignty Prayer</span>
+    <div class="header-line"></div>
+  </div>
+  <div class="prayer-body">
+    <div class="prayer-card">
+      <p class="prayer-text">主耶穌，我承認我犯了罪，我需要祢寶血的醫治。感謝祢，為我釘死在十字架上，赦免我一切的罪；我承認並接受祢是我生命的救主。</p>
+      <p class="prayer-text" style="margin-top:14px;">現在我邀請祢成為我生命中每個層面的主宰，我願意把我生命的主權交出來，求祢在我生命中完全掌權，完全得著我的生命。</p>
+
+      <div class="ch-block">
+        <p class="ch-label">Part I</p>
+        <h3 class="ch-title">求祢成為我靈的主</h3>
+      </div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求祢成為我與祢（聖父、聖子、聖靈）關係的主；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求祢成為我屬靈認知和良心的主；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求祢為我心靈創意和屬靈恩賜的主；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求祢成為我敬拜的主；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求祢成為我在祢裡面身份認同的主。</p></div>
+
+      <div class="ch-block">
+        <p class="ch-label">Part II</p>
+        <h3 class="ch-title">求祢成為我魂的主</h3>
+      </div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我的思想、我的態度、我的理性、我的信仰、我的想像、我的夢想和我所有的意念；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我的情緒、情緒的表達和我所有的反應；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我的意志和我一切的決定，無論是自覺的、不自覺的或下意識的決定；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我自我的防衛機制、適應機制和行為模式。</p></div>
+
+      <div class="ch-block">
+        <p class="ch-label">Part III</p>
+        <h3 class="ch-title">求祢成為我肉體的主</h3>
+      </div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我的健康、我的運動、我的營養攝取、我的休息、我的外表和我一切的行為舉止。</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>我願意把我的眼睛交在主的手中，求主掌管我所看的；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>我願意把我的耳朵交在主的手中，求主掌管我所聽見的；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>我願意把我的嘴巴交在主的手中，求主掌管我的話語和飲食；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>我願意把我的手交在主的手中，求主掌管我手所做的和碰觸的；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>我願意把我的腳交在主的手中，求主掌管我所去的地方；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>我願意把我的性慾交在主的手中，遵照主的心意來表達並滿足我的性慾。</p></div>
+
+      <div class="ch-block">
+        <p class="ch-label">Part IV</p>
+        <h3 class="ch-title">求祢成為我個人生活的主</h3>
+      </div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我的家庭：包括我的配偶、孩子和我們的家；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我所擁有的一切、我認為的需要和我的財務；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我的時間、工作（或學業）、服事和休閒生活；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我的計劃、我的野心、我的未來和我的命定；</p></div>
+      <div class="prayer-point"><span class="bullet">◆</span><p>求主掌管我所有的人際關係。</p></div>
+
+      <div class="amen-block">
+        <p class="amen-text">主耶穌，感謝祢為我流出寶血，使我得自由。<br>奉耶穌基督的名禱告，</p>
+        <span class="amen-word">阿 們！</span>
+        <span class="amen-cross">✝</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRAY 2 -->
+<div class="page" id="page-pray2">
+  <div class="prayer-header">
+    <span class="icon">🙏</span>
+    <h1>以主禱文為架構禱告文</h1>
+    <span class="en">The Lord's Prayer Framework</span>
+    <div class="header-line"></div>
+  </div>
+  <div class="prayer-body">
+    <div class="prayer-card">
+      <div class="ch-block" style="margin-top:0">
+        <p class="ch-label">壹</p>
+        <h3 class="ch-title">呼求阿爸天父</h3>
+        <p class="ch-verse">【我們在天上的父－太 6:9】</p>
+      </div>
+      <div class="sub-title">1. 拜父的心</div>
+      <p class="prayer-text">求主賜給我一顆真正拜父的心，堅信祢的慈愛永不改變，讓我明白地上的父親就算不好，尚且知道拿好東西給他的兒子，何況我們在天上的父呢！豈不更把好東西給求祂的人嗎？（太7:9-11）</p>
+      <div class="sub-title">2. 兒子的靈</div>
+      <p class="prayer-text">感謝天父！在基督裡靠著寶血，我成為兒女可以親近祢（弗2:13）。我所受的不再是奴僕的心，仍舊害怕；乃是兒子的心，可以呼叫阿爸天父！幫助我不再依靠成就和表現來證明自己的價值，恢復我受造時與祢之間的親密關係。</p>
+      <div class="sub-title">3. 除去懼怕</div>
+      <p class="prayer-text">阿爸天父！當我呼叫祢時，求祢除去我對地上父親或權柄一切扭曲錯謬的觀念，醫治我內心深處孤兒的靈和雇工的心態，所有孤單、被棄的感覺都要離我而去。</p>
+      <div class="sub-title">4. 承受產業</div>
+      <p class="prayer-text">阿爸天父！既是兒子，便是後嗣，我在祢眼中非常獨特尊貴；我擁有屬天的身分和產業；我一生都有恩惠、恩寵隨著我；我要永遠享受祢無條件的愛，支取祢無可限量的福。</p>
+
+      <div class="ch-block">
+        <p class="ch-label">貳</p>
+        <h3 class="ch-title">三 願</h3>
+      </div>
+      <p class="ch-verse" style="margin-bottom:12px;">【願人都尊祢的名為聖－太 6:9】</p>
+      <p class="prayer-text">祢的名高過諸天，祢的權柄統管萬有，每一次呼籲祢至聖尊名的時候，就帶出屬天的能力和祝福。</p>
+      <div class="scripture" style="text-align:center;line-height:2.3;">
+        耶和華以利沙代 · 耶和華麥加底西肯 · 耶和華拉法<br>
+        耶和華尼西 · 耶和華以勒 · 耶和華沙龍<br>
+        耶和華羅以 · 耶和華沙瑪 · 耶和華齊根努
+      </div>
+      <p class="ch-verse" style="margin:20px 0 12px;">【願祢的國降臨－太 6:10】</p>
+      <div class="sub-title">1. 我要認識神的國度</div>
+      <p class="prayer-text">主啊！打開我屬靈的眼界，曉諭我有二個國度，除了地上的國，還有一個天上的國，是看不見的國、是永恆的國、是屬基督的國。天國不在乎吃喝，只在乎公義和平並聖靈中的喜樂（羅14:17）。</p>
+      <div class="sub-title">2. 我要成為天國公民</div>
+      <p class="prayer-text">主啊！我渴望成為天國的公民，被天國的文化、價值、思想所充滿，幫助我操練更多思想天上的事，當我預覽天上的基業有何等豐盛榮耀時，我將為永恆的獎賞而努力，為追求不能壞的冠冕而奔跑，委身事奉神。</p>
+      <div class="sub-title">3. 我要經歷神的權能</div>
+      <p class="prayer-text">人子來為要除滅魔鬼的作為！我要呼求祢的國度每天降臨在我的生活中，釋放聖靈的權能在祢百姓身上，使我們奉主的名，病就得醫治、邪靈被趕逐、有神蹟奇事證明我們所傳的道。</p>
+      <div class="sub-title">4. 我要宣告天國降臨</div>
+      <p class="prayer-text">主啊！天國的真實要臨到這個世界，轉化的力量要進入七個界面（政治、經濟、教育、傳播、藝術、教會、家庭），秩序要代替混亂、豐盛代替貧窮、公義要使邦國高舉，台灣必成為我主基督的國。</p>
+      <p class="ch-verse" style="margin:20px 0 12px;">【願祢的旨意行在地上，如同行在天上－太 6:10】</p>
+      <div class="sub-title">1. 尋求神旨意</div>
+      <p class="prayer-text">主啊！我受造奇妙可畏，我是祢手中的工作，我無論作甚麼，都要為榮耀神而行。求祢顯明祢在我身上美好的命定，使我一生活出祢永恆的旨意、計劃和託付。</p>
+      <div class="sub-title">2. 認識神旨意</div>
+      <p class="prayer-text">主啊！求祢引導我藉著每日的讀經、禱告、與主相交，更貼近祢的胸懷，明白祢永世的恩典與計劃。因為惟獨認識神，得以剛強行事！聽從祢的，必安然居住、得享安靜、不怕災禍。</p>
+      <div class="sub-title">3. 遵行神旨意</div>
+      <p class="prayer-text">主啊！這世界和其上的情慾都要過去，惟獨遵行神旨意的永遠常存。請教導我尊主為大的功課，金錢、名利、權勢、地位不再是我的追求，神的國和神的義才是我的優先。降服愈多，被主使用就愈多、事奉的帳幕就愈大。</p>
+      <div class="sub-title">4. 帶下神旨意</div>
+      <p class="prayer-text">主啊！祢的旨意就是願萬人得救，請幫助我一生傳福音給未信之人，報喜信到未得之地，使萬民萬邦聽聞福音，得著救恩，歸向光明！並提醒我不可忘記行善和捐輸的事，因為這樣的祭，是神所喜悅的（來13:16）。</p>
+
+      <div class="ch-block">
+        <p class="ch-label">参</p>
+        <h3 class="ch-title">三 求</h3>
+      </div>
+      <p class="ch-verse" style="margin-bottom:12px;">【我們日用的飲食，今日賜給我們－太 6:11】</p>
+      <div class="sub-title">1. 經歷神的供應</div>
+      <p class="prayer-text">主啊！謝謝祢顧念我們每一天在生活、物質、經濟、財務上的需要，使我們不用為日用的飲食擔憂，而是不斷經歷祢的應許和供應。</p>
+      <div class="sub-title">2. 支取神的供應</div>
+      <p class="prayer-text">耶和華以勒的神啊！幫助我除了求物質上的需要，也將各樣的恩惠多多的加給我，使我凡事常常充足，能多行各樣善事（林後9:8）。打破我貧窮的靈和貧窮的思想，操練每天把特定的需要帶到主面前，決定以禱告取代憂慮，學習一無掛慮，神必照祢榮耀的豐富，使我一切所需用的都充足了！</p>
+      <div class="sub-title">3. 感謝神的供應</div>
+      <p class="prayer-text">主啊！幫助我心存感恩，我所得的謝謝祢為我持守，得貨財的力量更是屬乎耶和華，我要以感謝和讚美在神面前成為甜美的馨香之祭，我要以財物和一切初熟的土產尊榮耶和華。</p>
+      <p class="ch-verse" style="margin:20px 0 12px;">【免我們的債，如同我們免了人的債－太 6:12】</p>
+      <div class="sub-title">1. 赦免</div>
+      <p class="prayer-text">主啊！遮掩自己罪過的，必不亨通；承認離棄罪過的，必蒙憐恤。謝謝祢！當我還做罪人的時候，就為我死在十字架上，赦免我一切的罪，洗淨我一切的不義，使我不再受罪壓制；求祢指教我如何脫去失望、愧疚和定罪感，活出盼望和喜樂。</p>
+      <div class="sub-title">2. 饒恕</div>
+      <p class="prayer-text">主啊！我定意饒恕得罪我的人，樂意像祢一樣以德報怨，倚靠內住聖靈的恩典及能力行事。在信心裡宣告，我要愛我的仇敵，祝福咒詛我的人，向恨我的行善、為逼迫我的禱告。求祢聖靈光照我內心每個角落，讓我看見仇敵試圖建立堅固的營壘！</p>
+      <div class="sub-title">3. 醫治</div>
+      <p class="prayer-text">主耶穌！求祢教導我們要以恩慈相待，存憐憫的心，彼此饒恕，正如神在基督裡饒恕了我們一樣（弗4:32）。求祢祝福我的家人、朋友、同胞，從過去的傷痛中走出來，忘記背後，努力面前，經歷真實的醫治。</p>
+      <p class="ch-verse" style="margin:20px 0 12px;">【不叫我們遇見試探，救我們脫離兇惡－太 6:13】</p>
+      <p class="prayer-text">主啊！仇敵如同吼叫的獅子尋找可吞吃的，但祢已經應許必堅固、保護我們，教導我們屬靈爭戰的智慧：</p>
+      <div class="prayer-point" style="margin-top:12px;"><span class="bullet">①</span><p>天天穿戴神所賜的全副軍裝（真理束腰、公義護胸、平安的福音為鞋、信德為盾、救恩頭盔、聖靈寶劍即神的道、隨時在聖靈裡禱告祈求）。</p></div>
+      <div class="prayer-point"><span class="bullet">②</span><p>時時建立屬靈護衛的籬笆（高舉耶和華的名、宣告祂是我的盾牌、我的山寨、我所倚靠的）。</p></div>
+
+      <div class="ch-block">
+        <p class="ch-label">肆</p>
+        <h3 class="ch-title">讚 美</h3>
+        <p class="ch-verse">【因為國度、權柄、榮耀，全是祢的直到永遠－太 6:13】</p>
+      </div>
+      <div class="sub-title">1. 國度</div>
+      <p class="prayer-text">主啊！感謝祢將我從黑暗的權勢中釋放出來，領我到基督的國度裡，使我成為祢國度的子民，與基督同作後嗣，同享屬天的基業。</p>
+      <div class="sub-title">2. 權柄</div>
+      <p class="prayer-text">至高神！祢在人的國中掌權，天上地下一切權柄都是祢的，這世上的國，都要成為我主和我主基督的國。</p>
+      <div class="sub-title">3. 榮耀</div>
+      <p class="prayer-text">榮耀的救主！祢是永活的真神，列國的萬族都要在祢面前敬拜，但願頌讚、尊貴、榮耀、權勢都歸給坐寶座的神，直到永永遠遠。</p>
+
+      <div class="amen-block">
+        <span class="amen-word">阿 們！</span>
+        <span class="amen-cross">✝</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRAY 3 -->
+<div class="page" id="page-pray3">
+  <div class="prayer-header">
+    <span class="icon">💼</span>
+    <h1>榮耀職場禱告文</h1>
+    <span class="en">Workplace Glory Prayer</span>
+    <div class="header-line"></div>
+  </div>
+  <div class="prayer-body">
+    <div class="prayer-card">
+      <div class="prayer-intro">
+        我們是神國的子民，是職場的聖徒，是基督的精兵。<br>
+        我們不但追求事業的成功，更追求屬天的豐盛，見證神榮耀的同在。<br>
+        我們全然委身於神在職場的旨意，立志轉化職場為禾場，<br>
+        宣揚那召我們出黑暗入光明者的美德，使地上的國成為我主和我主基督的國。
+      </div>
+
+      <div class="ch-block" style="margin-top:0">
+        <p class="ch-label">壹</p>
+        <h3 class="ch-title">宣教的使命與異象</h3>
+      </div>
+      <div class="scripture">「我尋得我的僕人大衛，用我的聖膏膏他。我的手必使他堅立；我的膀臂也必堅固他。」(詩89:20-21)</div>
+      <div class="scripture">「你們多結果子，我父就因此得榮耀，你們也就是我的門徒了。」（約15:8）</div>
+      <div class="prayer-dialogue">主啊，祢是全有、全知、全豐的神，我知道祢對我有美好的計劃，是以厚恩待我的神。身為祢的兒女，我已得著屬天的福氣，屬靈的豐盛；求祢進一步提升我國度的視野，擴張我工作事業的境界，加添我智慧、知識、能力與美好的品格。</div>
+      <div class="prayer-dialogue">主啊，求祢啟示我前瞻的願景（異象）、發展的策略、明確的目標；使我有更多的機會與資源，使我富足豐盛，得以投資（參與）神國事業的拓展，使更多的人認識祢、歸向祢、信靠祢，經歷祢奇妙的恩典。</div>
+      <div class="prayer-dialogue">主啊，我知道一切都是祢所賜的，我定意要向著標竿直跑，運用神給的各樣恩賜以及在職場上的影響力，盡心竭力完成神所託付的使命，領人信主，並使人作主的門徒。</div>
+      <div class="prayer-dialogue">主啊，求祢興起更多的職場聖徒—不論是經營者、管理者或是員工，使他們在業界作鹽作光，發揮影響力，傳遞神的異象與旨意，得著並轉化地上的企業，成為我主基督的國。</div>
+
+      <div class="ch-block">
+        <p class="ch-label">貳</p>
+        <h3 class="ch-title">卓越的信念與價值</h3>
+      </div>
+      <div class="scripture">「神能照著運行在我們心裡的大力充充足足的成就一切，超過我們所求所想的。」(弗3:20)</div>
+      <div class="scripture">「因為凡有的，還要加給他，叫他有餘；沒有的，連他所有的也要奪過來。」(太25:29)</div>
+      <div class="prayer-dialogue">主啊，求祢擴張我的境界，提升我的視野；使我能以堅定的信念與卓越的態度，在工作及事業方面，不斷的創新與突破，且有能力洞悉問題、持續改善，在職場上見證祢榮耀的同在與賜福。</div>
+      <div class="prayer-dialogue">主啊，使我成為神國度的人才，樂於迎接一切的挑戰及改變，居上不居下，居首不居尾，所言所行盡都榮神益人。</div>
+      <div class="prayer-dialogue">我深信靠著那加給我力量的，我凡事都能做，因上帝已使我在基督裡得著各樣屬靈的福氣。求祢使我不斷保持積極的思想與負責的態度，展現高效率與高品質的績效。</div>
+
+      <div class="ch-block">
+        <p class="ch-label">参</p>
+        <h3 class="ch-title">純全的品格操守</h3>
+      </div>
+      <div class="scripture">「你要保守你心，勝過保守一切，因為一生的果效是由心發出。」(箴4:23)</div>
+      <div class="scripture">「神是靈，所以拜祂的必須用心靈和誠實拜祂。」(約4:24)</div>
+      <div class="scripture">「不從惡人的計謀，不站罪人的道路，不坐褻慢人的座位，惟喜愛耶和華的律法，晝夜思想，這人便為有福！」(詩1:1-2)</div>
+      <div class="scripture">「因此，祂已將又寶貴又極大的應許賜給我們，叫我們既脫離世上從情慾來的敗壞，就得與神的性情有分。」(彼後1:4)</div>
+      <div class="prayer-dialogue">主啊，求祢掌管我的生命，保守我純全正直的心，有美善的品格與德性，拒絕一切從仇敵來的試探與誘惑，不貪不當得的名與利。</div>
+      <div class="prayer-dialogue">指教我在凡事上皆以神的話作判斷的依據，引領我一直行在神的旨意裡，行在義路中，不偏左右。使我得以被稱為忠心良善的僕人，討神喜悅。</div>
+      <div class="prayer-dialogue">主啊，求賜我屬天的智慧及聖靈的果子，活出基督的樣式，並充滿基督馨香的氣息，使我的行為與所蒙的恩相稱。</div>
+
+      <div class="ch-block">
+        <p class="ch-label">肆</p>
+        <h3 class="ch-title">美好的人際關係</h3>
+      </div>
+      <div class="scripture">「凡事謙虛、溫柔、忍耐，用愛心互相寬容，用和平彼此聯絡，竭力保守聖靈所賜合而為一的心。」(弗4:2-3)</div>
+      <div class="scripture">「凡事不可結黨，不可貪圖虛浮的榮耀；只要存心謙卑，各人看別人比自己強。各人不要單顧自己的事，也要顧別人的事。」(腓2:3-4)</div>
+      <div class="prayer-dialogue">幫助我懂得欣賞別人優點，包容別人缺點，接納別人軟弱；不但樂於向人學習，且樂意與人合作，使團隊更加成功。</div>
+      <div class="prayer-dialogue">賜我聰明，能以瞭解內外部顧客的需求，使我有良好的人際關係，並提供最佳的服務，贏得更多的信任與託付。</div>
+      <div class="prayer-dialogue">主啊！保守我在職場中，作調和的鹽，使人和睦。賜我柔和謙卑的心，能傾聽別人的問題與需要，且能以正面積極的話語，鼓勵造就別人，成為他們的幫助。</div>
+
+      <div class="ch-block">
+        <p class="ch-label">伍</p>
+        <h3 class="ch-title">智慧的財務管理</h3>
+      </div>
+      <div class="scripture">「你們要先求祂的國和祂的義，這些東西都要加給你們了。」(太6:33)</div>
+      <div class="prayer-dialogue">主啊，教導我成為祢的好管家，在金錢管理與分配上，能有智慧、有原則，用所當用，省所當省。</div>
+      <div class="prayer-dialogue">主啊，保守我不落入經濟的陷阱與破口，不好宴樂，不貪享受，並且遠離貧窮與失敗的思想。</div>
+      <div class="prayer-dialogue">主啊，指教我在金錢上有正確的知識與態度。使我富足，卻不是用來滿足自己的野心，而是使神國事業得以拓展。使我豐盛，而且能用在有價值、有意義的事上面，使更多的人得聽福音，認識真神耶穌基督。</div>
+
+      <div class="amen-block">
+        <p class="amen-text">願一切榮耀頌讚都歸給我們的神，直到永永遠遠。</p>
+        <span class="amen-word">阿 們！</span>
+        <span class="amen-cross">✝</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRAY 4 -->
+<div class="page" id="page-pray4">
+  <div class="prayer-header">
+    <span class="icon">✨</span>
+    <h1>雅比斯禱告</h1>
+    <span class="en">Jabez Prayer</span>
+    <div class="header-line"></div>
+  </div>
+  <div class="prayer-body">
+    <div class="prayer-card">
+      <div class="scripture" style="font-size:0.93rem;line-height:2.1;font-style:normal;">
+        雅比斯求告以色列的神說：「甚願祢賜福與我，擴張我的境界，常與我同在，保佑我不遭患難，不受艱苦。」神就應允他所求的。<br>
+        <span style="font-size:0.82rem;color:var(--text-soft);font-style:italic;">— 歷代志上 4:10</span>
+      </div>
+
+      <div class="ch-block" style="margin-top:24px;">
+        <p class="ch-label">一</p>
+        <h3 class="ch-title">甚願祢賜福與我</h3>
+        <p class="ch-verse">求雅比斯一定要神的心，仰望、倚靠、尋求祂</p>
+      </div>
+      <div class="prayer-dialogue">神啊！求祢賜福與我，大大的賜福我，祢所賜的福使我富足，並透過我及我所做的工作，彰顯祢的榮耀，讓我的人生每天充滿神蹟。</div>
+      <div class="prayer-dialogue">奉主的名宣告，我是君尊的皇族、我的受造奇妙可畏，我是尊貴的、我是被愛的。上帝對我的生命有美好的計劃，祢使我居上不居下、居首不居尾，我一生一世必有恩惠慈愛隨著我，凡我手所做的盡都成功興盛，我對未來充滿期待。</div>
+      <div class="prayer-dialogue">求神使我忘記背後、努力面前，向著標竿直跑，為要得著獎賞。（腓三13-14）有蒙福的心態、蒙福的生活方式、蒙福的言語，以及富足慷慨的心靈。</div>
+
+      <div class="ch-block">
+        <p class="ch-label">二</p>
+        <h3 class="ch-title">擴張我的境界</h3>
+        <p class="ch-verse">為神活得更寬廣，求更大服事的機會</p>
+      </div>
+      <div class="prayer-dialogue">主啊，求祢眷顧祢交在我手中的一切，大大的擴張它，使我領受多產、倍增、掌權的祝福！賜給我得貨財的力量，擴展我的業務，並使我的家族生養眾多，家裡有好的人際關係，為了祢的榮耀，叫我及這個家庭日漸昌盛、成為大國！</div>
+      <div class="prayer-dialogue">主啊，求祢幫助我有行動的信心，啟動祢的能力、祢的恩典與祝福。使我跨越我的境界，為祢得著腳掌所踏之地，勇敢為祢作見證、傳福音，並奉祢的名領人歸主，相信祢會透過我來成就祢的工作，因為不是倚靠勢力，不是倚靠才能，乃是倚靠祢的靈方能成事（亞四6）。求祢增加我事奉的機會、力量和資源，使我多多撒種、多有收成，在職場、家庭、社區發揮光和鹽的影響力，更加有能力去祝福別人。</div>
+
+      <div class="ch-block">
+        <p class="ch-label">三</p>
+        <h3 class="ch-title">常與我同在</h3>
+        <p class="ch-verse">離了神，我就不能做什麼</p>
+      </div>
+      <div class="prayer-dialogue">主啊，求祢常與我同在，在我生命中完全掌權，使我凡事以祢居首位，順服祢的引導，完成祢的旨意，榮耀祢的名，活出得勝有餘的人生。照著祢的話說：祢與我同在，我就必擊打米甸人，如擊打一人一樣（士六16）。</div>
+      <div class="prayer-dialogue">主啊，我相信在人不能的，在祢凡事都能（太十九26），求祢的手引導我、扶持我，使我生命連結於祢，與祢關係更親近，愈加愛祢、渴慕祢，每天在祢的話語中得著啓示和亮光，學習完全倚靠祢。</div>
+      <div class="prayer-dialogue">主啊，求祢的聖靈常常充滿我，按著祢豐盛的榮耀，藉著祢的靈，叫我心裡的力量剛強起來。我相信祢必照著運行在我心裡的大力充充足足地成就一切，超過我所求所想的。（弗三16、20）</div>
+
+      <div class="ch-block">
+        <p class="ch-label">四</p>
+        <h3 class="ch-title">保佑我不遭患難，不受艱苦</h3>
+        <p class="ch-verse">不叫我遇見試探，救我脫離一切凶惡（太六13）</p>
+      </div>
+      <div class="prayer-dialogue">神阿！求主的寶血遮蓋我、保佑我，不受撒但的攻擊與從牠而來的患難，求祢引導我的腳步，離開不是祢所定的道路，保守我不遇見感情及肉體的試探，不容許我落入色情和性犯罪，遠離一切邪惡，以及罪所帶來的痛苦和憂傷。</div>
+      <div class="prayer-dialogue">主啊，求祢對我所看不見的危險，或因我的驕傲、漫不經心，自以為可以憑經驗冒險一試的事，都築起一道超自然的圍牆。父啊，求祢以大能護衛我！</div>
+      <div class="prayer-dialogue">主啊，世上所有的權勢都必須向祢的名敬拜，一切黑暗、邪惡也都要在祢眼前逃遁。我宣告我已與基督同釘十字架，現在活著的不再是我，乃是基督在我裡面活著。（加二20）因此靠著基督，我不必活在試探和失敗中，而能仗著十字架誇勝。</div>
+
+      <div class="amen-block">
+        <p class="amen-text">神就應允他所求的。</p>
+        <span class="amen-word">阿 們！</span>
+        <span class="amen-cross">✝</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" id="nav-home" onclick="switchPage('home')">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">首頁</span>
+  </button>
+  <button class="nav-item" id="nav-pray1" onclick="switchPage('pray1')">
+    <span class="nav-icon">👑</span>
+    <span class="nav-label">主掌權</span>
+  </button>
+  <button class="nav-item" id="nav-pray2" onclick="switchPage('pray2')">
+    <span class="nav-icon">🙏</span>
+    <span class="nav-label">主禱文</span>
+  </button>
+  <button class="nav-item" id="nav-pray3" onclick="switchPage('pray3')">
+    <span class="nav-icon">💼</span>
+    <span class="nav-label">職場</span>
+  </button>
+  <button class="nav-item" id="nav-pray4" onclick="switchPage('pray4')">
+    <span class="nav-icon">✨</span>
+    <span class="nav-label">雅比斯</span>
+  </button>
+</nav>
+
+<a href="#" class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑</a>
+
+<script>
+function switchPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+function goTo(id) { switchPage(id); }
+const btn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  btn.classList.toggle('show', window.scrollY > 300);
+});
+</script>
+</body>
+</html>
