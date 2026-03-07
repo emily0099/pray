@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>禱告文集</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&family=Cinzel+Decorative:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Cinzel+Decorative:wght@400&display=swap" rel="stylesheet">
 <style>
 :root {
   --cream: #fdf6ec;
@@ -23,11 +23,19 @@
   --nav-h: 68px;
   --nav-safe: env(safe-area-inset-bottom, 0px);
 }
+/* Numbers & Latin → DM Mono；中文 → Noto Sans TC */
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('https://fonts.gstatic.com/s/notosanstc/v35/nKKQ-GM_FYFRJvXzVXaAPe9hMnB3Eu7mOQ.woff2') format('woff2');
+  unicode-range: U+4E00-9FFF, U+3400-4DBF, U+2CEB0-2EBE0, U+3000-303F;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html { scroll-behavior:smooth; }
+
 body {
   background: var(--cream);
-  font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'DM Mono', 'Noto Sans TC', sans-serif;
   color: var(--text-dark);
   min-height: 100vh;
   padding-bottom: calc(var(--nav-h) + var(--nav-safe));
@@ -47,7 +55,7 @@ body {
 }
 .top-bar .cross { color:var(--gold); font-size:1rem; }
 .top-bar .title {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:1.05rem; font-weight:400;
   letter-spacing:0.2em; color:var(--brown);
 }
@@ -64,7 +72,7 @@ body {
 }
 .home-cross { font-size:2.4rem; color:var(--gold); margin-bottom:16px; display:block; }
 .home-title {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:2rem; font-weight:300;
   letter-spacing:0.2em; color:var(--brown); line-height:1.4;
 }
@@ -85,7 +93,7 @@ body {
 .home-divider::after  { background:linear-gradient(90deg,var(--gold-light),transparent); }
 .home-divider span { color:var(--gold); font-size:0.8rem; }
 .home-verse {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:0.92rem; font-weight:300;
   color:var(--text-soft); font-style:italic;
   line-height:2; max-width:300px; margin:0 auto;
@@ -113,7 +121,7 @@ body {
 }
 .card-info { flex:1; min-width:0; }
 .card-title {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:1rem; font-weight:500;
   color:var(--brown); letter-spacing:0.05em; margin-bottom:4px;
 }
@@ -128,7 +136,7 @@ body {
 }
 .prayer-header .icon { font-size:1.8rem; margin-bottom:10px; display:block; }
 .prayer-header h1 {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:1.45rem; font-weight:400;
   color:var(--brown); letter-spacing:0.15em; line-height:1.4;
 }
@@ -160,7 +168,7 @@ body {
   color:var(--gold); text-transform:uppercase; margin-bottom:4px;
 }
 .ch-title {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:1.08rem; font-weight:500;
   color:var(--brown); letter-spacing:0.08em;
   padding-left:14px; border-left:3px solid var(--gold); line-height:1.5;
@@ -171,7 +179,7 @@ body {
 }
 /* Sub */
 .sub-title {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:0.97rem; font-weight:500;
   color:var(--brown-light); letter-spacing:0.06em;
   display:flex; align-items:center; gap:8px;
@@ -180,7 +188,7 @@ body {
 .sub-title::before { content:''; width:18px; height:1px; background:var(--gold-light); flex-shrink:0; }
 /* Text */
 .prayer-text {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:0.96rem; font-weight:300;
   line-height:2.2; color:var(--text-dark);
 }
@@ -188,7 +196,7 @@ body {
 .prayer-point { display:flex; gap:10px; margin:11px 0; }
 .prayer-point .bullet { color:var(--gold); font-size:0.7rem; margin-top:7px; flex-shrink:0; }
 .prayer-point p {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:0.94rem; line-height:2.1;
   color:var(--text-dark); font-weight:300;
 }
@@ -208,7 +216,7 @@ body {
   border:1px solid rgba(122,106,154,0.13);
   border-radius:12px; font-size:0.94rem;
   color:var(--text-dark); line-height:2.1;
-  font-family:'Noto Serif TC',serif; font-weight:300;
+  font-family:'Noto Sans TC',sans-serif; font-weight:300;
   position:relative;
 }
 .prayer-dialogue::before {
@@ -218,7 +226,7 @@ body {
 }
 /* Intro */
 .prayer-intro {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:0.91rem; font-weight:300;
   color:var(--brown-light); line-height:2.2;
   margin-bottom:26px; font-style:italic; text-align:center;
@@ -231,12 +239,12 @@ body {
   padding-top:22px; border-top:1px solid rgba(184,147,58,0.2);
 }
 .amen-text {
-  font-family:'Noto Serif TC',serif;
+  font-family:'Noto Sans TC',sans-serif;
   font-size:0.93rem; color:var(--brown); line-height:2;
 }
 .amen-word {
   font-size:1.3rem; letter-spacing:0.3em;
-  color:var(--gold); font-family:'Noto Serif TC',serif;
+  color:var(--gold); font-family:'Noto Sans TC',sans-serif;
   display:block; margin-top:6px;
 }
 .amen-cross { font-size:1.4rem; color:var(--gold); display:block; margin:10px auto 0; }
