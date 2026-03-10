@@ -728,13 +728,14 @@ body {
     <div class="header-line"></div>
   </div>
   <div class="prayer-body">
-    <div class="prayer-card" style="padding:0;overflow:hidden;min-height:70vh;display:flex;flex-direction:column;">
-      <div id="devotion-status" style="padding:28px 20px;text-align:center;font-family:'Noto Sans TC',sans-serif;color:var(--text-soft);font-size:0.93rem;line-height:2.2;display:none;">
-        <span style="font-size:2rem;display:block;margin-bottom:12px;">📄</span>
-        <span id="devotion-status-text"></span>
-      </div>
+    <div id="devotion-status" style="padding:28px 20px;text-align:center;font-family:'Noto Sans TC',sans-serif;color:var(--text-soft);font-size:0.93rem;line-height:2.2;display:none;background:var(--warm-white);border-radius:18px;border:1px solid rgba(184,147,58,0.14);box-shadow:0 3px 22px var(--shadow);">
+      <span style="font-size:2rem;display:block;margin-bottom:12px;">📄</span>
+      <span id="devotion-status-text"></span>
+    </div>
+    <div id="devotion-frame-wrap" style="display:none;overflow:hidden;border-radius:18px;box-shadow:0 3px 22px var(--shadow);">
       <iframe id="devotion-frame"
-        style="width:100%;flex:1;min-height:70vh;border:none;border-radius:18px;display:none;"
+        style="width:100%;height:calc(100vh - 200px);border:none;display:block;"
+        scrolling="yes"
         allowfullscreen>
       </iframe>
     </div>
@@ -814,7 +815,7 @@ function loadDevotion() {
     .then(res => {
       if (res.ok) {
         frame.src = url;
-        frame.style.display = 'block';
+        document.getElementById('devotion-frame-wrap').style.display = 'block';
         status.style.display = 'none';
       } else {
         statusText.textContent = '今日（' + month + '月' + day + '日）的研經檔案尚未上傳。\n\n請將 ' + filename + ' 上傳至 book/ 資料夾。';
