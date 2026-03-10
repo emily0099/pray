@@ -739,7 +739,7 @@ body {
       </iframe>
     </div>
     <p style="text-align:center;font-size:0.75rem;color:var(--text-soft);margin-top:12px;padding:0 16px;line-height:1.8;font-family:'Noto Sans TC',sans-serif;">
-      PDF 檔請上傳至 repo 的 <code style="background:var(--gold-pale);padding:2px 6px;border-radius:4px;font-size:0.72rem;">devotion/</code> 資料夾<br>
+      PDF 檔請上傳至 repo 的 <code style="background:var(--gold-pale);padding:2px 6px;border-radius:4px;font-size:0.72rem;">book/</code> 資料夾<br>
       檔名格式：<code style="background:var(--gold-pale);padding:2px 6px;border-radius:4px;font-size:0.72rem;">03月10日.pdf</code>
     </p>
   </div>
@@ -794,7 +794,7 @@ function loadDevotion() {
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day   = String(now.getDate()).padStart(2, '0');
   const filename = month + '月' + day + '日.pdf';
-  const url = 'devotion/' + encodeURIComponent(filename);
+  const url = 'book/' + encodeURIComponent(filename);
 
   // Update header
   document.getElementById('devotion-date').textContent =
@@ -817,11 +817,11 @@ function loadDevotion() {
         frame.style.display = 'block';
         status.style.display = 'none';
       } else {
-        statusText.textContent = '今日（' + month + '月' + day + '日）的研經檔案尚未上傳。\n\n請將 ' + filename + ' 上傳至 devotion/ 資料夾。';
+        statusText.textContent = '今日（' + month + '月' + day + '日）的研經檔案尚未上傳。\n\n請將 ' + filename + ' 上傳至 book/ 資料夾。';
       }
     })
     .catch(() => {
-      statusText.textContent = '今日（' + month + '月' + day + '日）的研經檔案尚未上傳。\n\n請將 ' + filename + ' 上傳至 devotion/ 資料夾。';
+      statusText.textContent = '今日（' + month + '月' + day + '日）的研經檔案尚未上傳。\n\n請將 ' + filename + ' 上傳至 book/ 資料夾。';
     });
 }
 function goTo(id) { switchPage(id); }
