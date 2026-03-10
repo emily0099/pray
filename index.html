@@ -795,7 +795,8 @@ function loadDevotion() {
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day   = String(now.getDate()).padStart(2, '0');
   const filename = month + '月' + day + '日.pdf';
-  const url = 'book/' + encodeURIComponent(filename);
+  // Try both encoded and raw filename
+  const url = 'book/' + filename;
 
   // Update header
   document.getElementById('devotion-date').textContent =
