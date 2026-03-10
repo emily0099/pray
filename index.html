@@ -795,36 +795,20 @@ function loadDevotion() {
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day   = String(now.getDate()).padStart(2, '0');
   const filename = month + '月' + day + '日.pdf';
-  // Try both encoded and raw filename
   const url = 'book/' + filename;
 
-  // Update header
   document.getElementById('devotion-date').textContent =
     now.getFullYear() + ' / ' + month + ' / ' + day;
   document.getElementById('devotion-title').textContent = month + '月' + day + '日研經';
 
   const frame  = document.getElementById('devotion-frame');
+  const wrap   = document.getElementById('devotion-frame-wrap');
   const status = document.getElementById('devotion-status');
-  const statusText = document.getElementById('devotion-status-text');
 
-  // Try to load; show message if not found
-  frame.style.display = 'none';
-  status.style.display = 'block';
-  statusText.textContent = '載入中…';
-
-  fetch(url, { method: 'HEAD' })
-    .then(res => {
-      if (res.ok) {
-        frame.src = url;
-        document.getElementById('devotion-frame-wrap').style.display = 'block';
-        status.style.display = 'none';
-      } else {
-        statusText.textContent = '今日（' + month + '月' + day + '日）的研經檔案尚未上傳。\n\n請將 ' + filename + ' 上傳至 book/ 資料夾。';
-      }
-    })
-    .catch(() => {
-      statusText.textContent = '今日（' + month + '月' + day + '日）的研經檔案尚未上傳。\n\n請將 ' + filename + ' 上傳至 book/ 資料夾。';
-    });
+  // 直接載入，不做 fetch 偵測
+  status.style.display = 'none';
+  wrap.style.display = 'block';
+  frame.src = url;
 }
 function goTo(id) { switchPage(id); }
 const btn = document.getElementById('scrollTop');
