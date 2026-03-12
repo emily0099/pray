@@ -819,14 +819,16 @@ function loadDevotion() {
   status.style.display = 'none';
   wrap.style.display = 'block';
   document.getElementById('devotion-page-nav').style.display = 'block';
-  frame.src = url + '#page=1';
-  devotionSetActivePage(1);
+  window._devotionPdfUrl = url;
+  devotionGoPage(1);
 }
 
 function devotionGoPage(pageNum) {
   const frame = document.getElementById('devotion-frame');
-  const src = frame.src.replace(/#.*$/, '');
-  frame.src = src + '#page=' + pageNum;
+  frame.src = '';
+  setTimeout(() => {
+    frame.src = window._devotionPdfUrl + '#page=' + pageNum;
+  }, 50);
   devotionSetActivePage(pageNum);
 }
 
