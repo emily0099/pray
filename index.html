@@ -820,9 +820,9 @@ function loadDevotion() {
   _devotionPdfDoc = null;
   pdfjsLib.getDocument({
     url: url,
-    cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+    cMapUrl: 'https://unpkg.com/pdfjs-dist@3.11.174/cmaps/',
     cMapPacked: true,
-    standardFontDataUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/standard_fonts/',
+    standardFontDataUrl: 'https://unpkg.com/pdfjs-dist@3.11.174/standard_fonts/',
   }).promise.then(pdf => {
     _devotionPdfDoc = pdf;
     devotionGoPage(1);
