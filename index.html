@@ -821,7 +821,11 @@ function loadDevotion() {
   document.getElementById('devotion-page-nav').style.display = 'block';
 
   _devotionPdfDoc = null;
-  pdfjsLib.getDocument(url).promise.then(pdf => {
+  pdfjsLib.getDocument({
+    url: url,
+    cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+    cMapPacked: true,
+  }).promise.then(pdf => {
     _devotionPdfDoc = pdf;
     devotionGoPage(1);
   });
