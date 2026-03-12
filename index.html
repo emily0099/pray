@@ -790,6 +790,7 @@ function switchPage(id) {
   document.getElementById('page-' + id).classList.add('active');
   document.getElementById('nav-' + id).classList.add('active');
   window.scrollTo({ top: 0, behavior: 'instant' });
+  if (id !== 'devotion' && _devotionRenderTask) { _devotionRenderTask.cancel(); _devotionRenderTask = null; }
   if (id === 'devotion') loadDevotion();
 }
 
@@ -798,6 +799,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 
 let _devotionPdfDoc = null;
 let _devotionRenderTask = null;
+let _devotionLoadedUrl = null;
 
 function loadDevotion() {
   const now = new Date();
@@ -817,7 +819,14 @@ function loadDevotion() {
   wrap.style.display = 'block';
   document.getElementById('devotion-page-nav').style.display = 'block';
 
+  // 已載入同一份 PDF 就不重新載入
+  if (_devotionPdfDoc && _devotionLoadedUrl === url) {
+    devotionGoPage(1);
+    return;
+  }
+
   _devotionPdfDoc = null;
+  _devotionLoadedUrl = url;
   pdfjsLib.getDocument({
     url: url,
     cMapUrl: 'https://unpkg.com/pdfjs-dist@3.11.174/cmaps/',
