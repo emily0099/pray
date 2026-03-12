@@ -801,6 +801,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 let _devotionPdfDoc = null;
+let _devotionRenderTask = null;
 
 function loadDevotion() {
   const now = new Date();
@@ -825,6 +826,7 @@ function loadDevotion() {
     url: url,
     cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
     cMapPacked: true,
+    standardFontDataUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/standard_fonts/',
   }).promise.then(pdf => {
     _devotionPdfDoc = pdf;
     devotionGoPage(1);
@@ -833,6 +835,7 @@ function loadDevotion() {
 
 function devotionGoPage(pageNum) {
   if (!_devotionPdfDoc) return;
+  if (_devotionRenderTask) { _devotionRenderTask.cancel(); _devotionRenderTask = null; }
   _devotionPdfDoc.getPage(pageNum).then(page => {
     const canvas = document.getElementById('devotion-canvas');
     const ctx = canvas.getContext('2d');
@@ -844,7 +847,8 @@ function devotionGoPage(pageNum) {
     canvas.height = viewport.height;
     canvas.style.width = cssWidth + 'px';
     canvas.style.height = (viewport.height / dpr) + 'px';
-    page.render({ canvasContext: ctx, viewport });
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    _devotionRenderTask = page.render({ canvasContext: ctx, viewport });
   });
   devotionSetActivePage(pageNum);
 }
