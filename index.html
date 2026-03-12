@@ -301,6 +301,7 @@ body {
   .home-cards { padding:8px 24px; }
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -742,12 +743,8 @@ body {
         第2頁
       </button>
     </div>
-    <div id="devotion-frame-wrap" style="display:none;overflow:hidden;border-radius:18px;box-shadow:0 3px 22px var(--shadow);">
-      <iframe id="devotion-frame"
-        style="width:100%;height:calc(100vh - 200px);border:none;display:block;"
-        scrolling="yes"
-        allowfullscreen>
-      </iframe>
+    <div id="devotion-frame-wrap" style="display:none;overflow:hidden;border-radius:18px;box-shadow:0 3px 22px var(--shadow);background:#fff;">
+      <canvas id="devotion-canvas" style="width:100%;display:block;"></canvas>
     </div>
     <p style="text-align:center;font-size:0.75rem;color:var(--text-soft);margin-top:12px;padding:0 16px;line-height:1.8;font-family:'Noto Sans TC',sans-serif;">
       PDF 檔請上傳至 repo 的 <code style="background:var(--gold-pale);padding:2px 6px;border-radius:4px;font-size:0.72rem;">book/</code> 資料夾<br>
@@ -800,6 +797,11 @@ function switchPage(id) {
   if (id === 'devotion') loadDevotion();
 }
 
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+let _devotionPdfDoc = null;
+
 function loadDevotion() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -811,24 +813,31 @@ function loadDevotion() {
     now.getFullYear() + ' / ' + month + ' / ' + day;
   document.getElementById('devotion-title').textContent = month + '月' + day + '日研經';
 
-  const frame  = document.getElementById('devotion-frame');
   const wrap   = document.getElementById('devotion-frame-wrap');
   const status = document.getElementById('devotion-status');
 
-  // 直接載入，不做 fetch 偵測
   status.style.display = 'none';
   wrap.style.display = 'block';
   document.getElementById('devotion-page-nav').style.display = 'block';
-  window._devotionPdfUrl = url;
-  devotionGoPage(1);
+
+  _devotionPdfDoc = null;
+  pdfjsLib.getDocument(url).promise.then(pdf => {
+    _devotionPdfDoc = pdf;
+    devotionGoPage(1);
+  });
 }
 
 function devotionGoPage(pageNum) {
-  const frame = document.getElementById('devotion-frame');
-  frame.src = '';
-  setTimeout(() => {
-    frame.src = window._devotionPdfUrl + '#page=' + pageNum;
-  }, 50);
+  if (!_devotionPdfDoc) return;
+  _devotionPdfDoc.getPage(pageNum).then(page => {
+    const canvas = document.getElementById('devotion-canvas');
+    const ctx = canvas.getContext('2d');
+    const scale = canvas.parentElement.clientWidth / page.getViewport({ scale: 1 }).width;
+    const viewport = page.getViewport({ scale });
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    page.render({ canvasContext: ctx, viewport });
+  });
   devotionSetActivePage(pageNum);
 }
 
