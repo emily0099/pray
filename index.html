@@ -836,7 +836,7 @@ function devotionGoPage(pageNum) {
     const canvas = document.getElementById('devotion-canvas');
     const ctx = canvas.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
-    const cssWidth = canvas.parentElement.clientWidth;
+    const cssWidth = window.innerWidth - 32;
     const scale = (cssWidth / page.getViewport({ scale: 1 }).width) * dpr;
     const viewport = page.getViewport({ scale });
     canvas.width = viewport.width;
@@ -845,6 +845,14 @@ function devotionGoPage(pageNum) {
     canvas.style.height = (viewport.height / dpr) + 'px';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     _devotionRenderTask = page.render({ canvasContext: ctx, viewport });
+    _devotionRenderTask.promise.catch(err => {
+      if (err && err.name !== 'RenderingCancelledException') {
+        canvas.parentElement.insertAdjacentHTML('afterend',
+          '<p style="color:red;text-align:center">錯誤：' + err.message + '</p>');
+      }
+    });
+  }).catch(err => {
+    alert('getPage error: ' + err.message);
   });
   devotionSetActivePage(pageNum);
 }
