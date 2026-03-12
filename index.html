@@ -732,6 +732,16 @@ body {
       <span style="font-size:2rem;display:block;margin-bottom:12px;">📄</span>
       <span id="devotion-status-text"></span>
     </div>
+    <div id="devotion-page-nav" style="display:none;text-align:center;margin-bottom:12px;">
+      <button onclick="devotionGoPage(1)" id="devotion-btn-p1"
+        style="margin:0 6px;padding:8px 22px;border-radius:20px;border:1.5px solid var(--gold);background:var(--gold);color:#fff;font-family:'Noto Sans TC',sans-serif;font-size:0.9rem;cursor:pointer;">
+        第1頁
+      </button>
+      <button onclick="devotionGoPage(2)" id="devotion-btn-p2"
+        style="margin:0 6px;padding:8px 22px;border-radius:20px;border:1.5px solid var(--gold);background:transparent;color:var(--gold);font-family:'Noto Sans TC',sans-serif;font-size:0.9rem;cursor:pointer;">
+        第2頁
+      </button>
+    </div>
     <div id="devotion-frame-wrap" style="display:none;overflow:hidden;border-radius:18px;box-shadow:0 3px 22px var(--shadow);">
       <iframe id="devotion-frame"
         style="width:100%;height:calc(100vh - 200px);border:none;display:block;"
@@ -808,7 +818,25 @@ function loadDevotion() {
   // 直接載入，不做 fetch 偵測
   status.style.display = 'none';
   wrap.style.display = 'block';
-  frame.src = url;
+  document.getElementById('devotion-page-nav').style.display = 'block';
+  frame.src = url + '#page=1';
+  devotionSetActivePage(1);
+}
+
+function devotionGoPage(pageNum) {
+  const frame = document.getElementById('devotion-frame');
+  const src = frame.src.replace(/#.*$/, '');
+  frame.src = src + '#page=' + pageNum;
+  devotionSetActivePage(pageNum);
+}
+
+function devotionSetActivePage(pageNum) {
+  const btn1 = document.getElementById('devotion-btn-p1');
+  const btn2 = document.getElementById('devotion-btn-p2');
+  btn1.style.background = pageNum === 1 ? 'var(--gold)' : 'transparent';
+  btn1.style.color = pageNum === 1 ? '#fff' : 'var(--gold)';
+  btn2.style.background = pageNum === 2 ? 'var(--gold)' : 'transparent';
+  btn2.style.color = pageNum === 2 ? '#fff' : 'var(--gold)';
 }
 function goTo(id) { switchPage(id); }
 const btn = document.getElementById('scrollTop');
