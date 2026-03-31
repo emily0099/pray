@@ -806,15 +806,19 @@ function loadDevotion() {
   const wrap   = document.getElementById('devotion-frame-wrap');
   const status = document.getElementById('devotion-status');
 
-  status.style.display = 'none';
-  wrap.style.display = 'block';
-  document.getElementById('devotion-page-nav').style.display = 'block';
-
   // 已載入同一份 PDF 就不重新載入
   if (_devotionPdfDoc && _devotionLoadedUrl === url) {
+    status.style.display = 'none';
+    wrap.style.display = 'block';
+    document.getElementById('devotion-page-nav').style.display = 'block';
     devotionGoPage(1);
     return;
   }
+
+  status.style.display = 'block';
+  document.getElementById('devotion-status-text').textContent = '載入中…';
+  wrap.style.display = 'none';
+  document.getElementById('devotion-page-nav').style.display = 'none';
 
   _devotionPdfDoc = null;
   _devotionLoadedUrl = url;
@@ -835,7 +839,13 @@ function loadDevotion() {
       btn.style.cssText = 'margin:0 6px;padding:8px 22px;border-radius:20px;border:1.5px solid var(--gold);background:transparent;color:var(--gold);font-family:\'Noto Sans TC\',sans-serif;font-size:0.9rem;cursor:pointer;';
       nav.appendChild(btn);
     }
+    status.style.display = 'none';
+    wrap.style.display = 'block';
+    nav.style.display = 'block';
     devotionGoPage(1);
+  }).catch(err => {
+    _devotionLoadedUrl = null;
+    document.getElementById('devotion-status-text').textContent = '無法載入：' + (err.message || err);
   });
 }
 
