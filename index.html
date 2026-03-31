@@ -796,8 +796,8 @@ function loadDevotion() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day   = String(now.getDate()).padStart(2, '0');
-  const filename = month + '月' + day + '日.pdf';
-  const url = 'book/' + filename;
+  const urlNew = 'book/' + month + day + '.pdf';
+  const urlOld = 'book/' + month + '月' + day + '日.pdf';
 
   document.getElementById('devotion-date').textContent =
     now.getFullYear() + ' / ' + month + ' / ' + day;
@@ -807,7 +807,9 @@ function loadDevotion() {
   const status = document.getElementById('devotion-status');
 
   // 已載入同一份 PDF 就不重新載入
-  if (_devotionPdfDoc && _devotionLoadedUrl === url) {
+  if (_devotionPdfDoc && (
+    _devotionLoadedUrl === urlNew || _devotionLoadedUrl === urlOld
+  )) {
     status.style.display = 'none';
     wrap.style.display = 'block';
     document.getElementById('devotion-page-nav').style.display = 'block';
@@ -821,14 +823,17 @@ function loadDevotion() {
   document.getElementById('devotion-page-nav').style.display = 'none';
 
   _devotionPdfDoc = null;
-  _devotionLoadedUrl = url;
-  pdfjsLib.getDocument({
-    url: url,
+  _devotionLoadedUrl = null;
+
+  const pdfOpts = {
     cMapUrl: 'https://unpkg.com/pdfjs-dist@3.11.174/cmaps/',
     cMapPacked: true,
     standardFontDataUrl: 'https://unpkg.com/pdfjs-dist@3.11.174/standard_fonts/',
-  }).promise.then(pdf => {
+  };
+
+  function onPdfLoaded(url, pdf) {
     _devotionPdfDoc = pdf;
+    _devotionLoadedUrl = url;
     const nav = document.getElementById('devotion-page-nav');
     nav.innerHTML = '';
     for (let i = 1; i <= pdf.numPages; i++) {
@@ -843,10 +848,18 @@ function loadDevotion() {
     wrap.style.display = 'block';
     nav.style.display = 'block';
     devotionGoPage(1);
-  }).catch(err => {
-    _devotionLoadedUrl = null;
-    document.getElementById('devotion-status-text').textContent = '無法載入：' + (err.message || err);
-  });
+  }
+
+  // 先試新格式 (MMDD.pdf)，失敗再試舊格式 (MM月DD日.pdf)
+  pdfjsLib.getDocument({ url: urlNew, ...pdfOpts }).promise
+    .then(pdf => onPdfLoaded(urlNew, pdf))
+    .catch(() =>
+      pdfjsLib.getDocument({ url: urlOld, ...pdfOpts }).promise
+        .then(pdf => onPdfLoaded(urlOld, pdf))
+        .catch(err => {
+          document.getElementById('devotion-status-text').textContent = '找不到今日研經';
+        })
+    );
 }
 
 function devotionGoPage(pageNum) {
