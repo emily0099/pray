@@ -797,7 +797,7 @@ function loadDevotion() {
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day   = String(now.getDate()).padStart(2, '0');
   const urlNew = 'book/' + month + day + '.pdf';
-  const urlOld = 'book/' + month + '月' + day + '日.pdf';
+  const urlOld = 'book/' + encodeURIComponent(month + '月' + day + '日') + '.pdf';
 
   document.getElementById('devotion-date').textContent =
     now.getFullYear() + ' / ' + month + ' / ' + day;
